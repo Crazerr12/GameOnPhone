@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Game On Phone</string>
+    <string name="Welcome">Привет, рад видеть тебя в своей первой игре, написанной на языке программирования kotlin, и работающей на операционных системам Android</string>
+    <string name="Ready">Если готов начать, жми на кнопку снизу</string>
+    <string name="Start">Поехали!</string>
+    <string name="Hit">Сделать удар</string>
+    <string name="damage">1-20</string>
+    <string name="player">Player</string>
+    <string name="monster">Monster</string>
+</resources>

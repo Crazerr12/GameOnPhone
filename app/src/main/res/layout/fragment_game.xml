@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.game.GameFragment">
+
+    <TextView
+        android:id="@+id/textPlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/player"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/iconPlayer"
+        app:layout_constraintEnd_toEndOf="@+id/iconPlayer"
+        app:layout_constraintStart_toStartOf="@+id/iconPlayer" />
+
+    <TextView
+        android:id="@+id/textMonster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/monster"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/iconMonster"
+        app:layout_constraintEnd_toEndOf="@+id/iconMonster"
+        app:layout_constraintStart_toStartOf="@+id/iconMonster" />
+
+    <ImageView
+        android:id="@+id/iconPlayer"
+        android:layout_width="110dp"
+        android:layout_height="160dp"
+        android:src="@drawable/player"
+        app:layout_constraintBottom_toTopOf="@+id/imageSwordPlayer"
+        app:layout_constraintEnd_toEndOf="@+id/imageArmorPlayer"
+        app:layout_constraintStart_toStartOf="@+id/imageHealthPlayer" />
+
+    <ImageView
+        android:id="@+id/iconMonster"
+        android:layout_width="110dp"
+        android:layout_height="160dp"
+        android:src="@drawable/monster"
+        app:layout_constraintBottom_toTopOf="@+id/imageSwordMonster"
+        app:layout_constraintEnd_toEndOf="@+id/imageHealthMonster" />
+
+    <ImageView
+        android:id="@+id/imageHealthPlayer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="270dp"
+        android:src="@drawable/heart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageSwordPlayer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/sword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageHealthPlayer"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageArmorPlayer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/shield"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageSwordPlayer"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageHealthMonster"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="270dp"
+        android:src="@drawable/heart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageSwordMonster"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/sword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageHealthMonster"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageArmorMonster"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/shield"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageSwordMonster"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textHealthPlayer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:hint="@string/damage"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageHealthPlayer"
+        app:layout_constraintStart_toStartOf="@+id/imageHealthPlayer"
+        app:layout_constraintTop_toBottomOf="@+id/imageHealthPlayer" />
+
+    <TextView
+        android:id="@+id/textAttackPlayer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:hint="@string/damage"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageSwordPlayer"
+        app:layout_constraintStart_toStartOf="@+id/imageSwordPlayer"
+        app:layout_constraintTop_toBottomOf="@+id/imageSwordPlayer" />
+
+    <TextView
+        android:id="@+id/textArmorPlayer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:hint="@string/damage"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageArmorPlayer"
+        app:layout_constraintStart_toStartOf="@+id/imageArmorPlayer"
+        app:layout_constraintTop_toBottomOf="@+id/imageArmorPlayer" />
+
+    <TextView
+        android:id="@+id/textHealthMonster"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:hint="@string/damage"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageHealthMonster"
+        app:layout_constraintStart_toStartOf="@+id/imageHealthMonster"
+        app:layout_constraintTop_toBottomOf="@+id/imageHealthMonster" />
+
+    <TextView
+        android:id="@+id/textAttackMonster"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:hint="@string/damage"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageSwordMonster"
+        app:layout_constraintStart_toStartOf="@+id/imageSwordMonster"
+        app:layout_constraintTop_toBottomOf="@+id/imageSwordMonster" />
+
+    <TextView
+        android:id="@+id/textArmorMonster"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:hint="@string/damage"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageArmorMonster"
+        app:layout_constraintStart_toStartOf="@+id/imageArmorMonster"
+        app:layout_constraintTop_toBottomOf="@+id/imageArmorMonster" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonHit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="90dp"
+        android:layout_marginTop="300dp"
+        android:backgroundTint="@color/yellow"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingVertical="12sp"
+        android:text="@string/Hit"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
