@@ -26,11 +26,11 @@ class GameFragment : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences("SHARED_PREF", MODE_PRIVATE)
         binding = FragmentGameBinding.inflate(inflater, container, false)
 
-        var playerModel = PlayerModel(health = 20, attack = (1..6), armor = 5)
+        val playerModel = PlayerModel(health = 20, attack = (1..6), armor = 5)
         val monsterModel = MonsterModel(health = 20, attack = (1..6), armor = 3)
 
-        var player: PlayerModel = PlayerModel(health = 20, attack = (1..6), armor = 5)
-        var monster: MonsterModel = MonsterModel(health = 20, attack = (1..6), armor = 3)
+        var player = PlayerModel(health = 20, attack = (1..6), armor = 5)
+        var monster = MonsterModel(health = 20, attack = (1..6), armor = 3)
         var counter = 3 // Количество исцелений героя
 
         binding.textHealthPlayer.text = player.health.toString()
@@ -50,22 +50,22 @@ class GameFragment : Fragment() {
                 val monsterAttack = monster.attack.random()
 
                 var modifierOfAttackPlayer: Int = playerAttack - monster.armor + 1
-                if (modifierOfAttackPlayer < 0)    //Если модификатор урона будет меньше нуля, то мы
+                if (modifierOfAttackPlayer < 1)    //Если модификатор урона будет меньше одного, то мы
                     modifierOfAttackPlayer =
-                        0     //будем приравнивать его нулю, чтобы кубик был брошен минимум 1 раз
+                        1     //будем приравнивать его единице, чтобы кубик был брошен минимум 1 раз
 
                 var modifierOfAttackMonster: Int = monsterAttack - player.armor + 1
-                if (modifierOfAttackMonster < 0)   //Если модификатор урона будет меньше нуля, то мы
+                if (modifierOfAttackMonster < 1)   //Если модификатор урона будет меньше одного, то мы
                     modifierOfAttackMonster =
-                        0    //будем приравнивать его нулю, чтобы кубик был брошен минимум 1 раз
+                        1    //будем приравнивать его единице, чтобы кубик был брошен минимум 1 раз
 
-                val dice = (1..6).random()
-                var i = 0
-                var k = 0
+                var i = 1
+                var k = 1
 
                 // в последующих циклах мы будем проверять успех удара
-                while (i <= modifierOfAttackPlayer) {  // так как количество кубиков совпадает с модификатором атаки,
-                    if (dice == 5 || dice == 6) {      // то в этот цикл будет работать, пока не станет равен модификатору
+                while (i <= modifierOfAttackPlayer) {         // так как количество кубиков совпадает с модификатором атаки,
+                    val dice = (1..6).random()                    // то в этот цикл будет работать, пока не станет равен модификатору
+                    if (dice == 5 || dice == 6) {
                         toastShowShort("Ваш удар успешен, вы наносите урон в виде $playerAttack")
                         monster.health -= playerAttack
                         binding.textHealthMonster.text = monster.health.toString()
@@ -76,9 +76,9 @@ class GameFragment : Fragment() {
                                 attack = monsterModel.attack,
                                 armor = monsterModel.armor
                             )
-                            monsterModel.health + 2
                             binding.textHealthMonster.text =
                                 monster.health.toString()  // Меняем количество здоровья у монстра
+                            monsterModel.health += 2
                         }
                         break           // Здесь, если удар успешен, мы заканчиваем цикл
                     } else if (k == modifierOfAttackMonster) {
@@ -88,6 +88,7 @@ class GameFragment : Fragment() {
                 }
 
                 while (k <= modifierOfAttackMonster) {
+                    val dice = (1..6).random()
                     if (dice == 5 || dice == 6) {
                         toastShowLong("Удар монстра успешен, он наносит урон в виде $monsterAttack")
                         player.health -= monsterAttack
@@ -105,6 +106,7 @@ class GameFragment : Fragment() {
                                     binding.textHealthPlayer.text = player.health.toString()
                                 }
                                 0 -> {
+                                    binding.textHealthPlayer.text = "0"
                                     toastShowLong("Ваши жизни закончились, GAME OVER")
                                     break
                                 }
