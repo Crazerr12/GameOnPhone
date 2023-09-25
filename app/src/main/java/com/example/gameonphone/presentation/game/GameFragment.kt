@@ -11,6 +11,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import com.example.gameonphone.databinding.FragmentGameBinding
+import com.example.gameonphone.presentation.models.ExtendedPlayer
 import com.example.gameonphone.presentation.models.MonsterModel
 import com.example.gameonphone.presentation.models.PlayerModel
 
@@ -21,105 +22,104 @@ class GameFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         sharedPreferences = requireActivity().getSharedPreferences("SHARED_PREF", MODE_PRIVATE)
         binding = FragmentGameBinding.inflate(inflater, container, false)
 
-        val playerModel = PlayerModel(health = 20, attack = (1..6), armor = 5)
-        val monsterModel = MonsterModel(health = 20, attack = (1..6), armor = 3)
+        val player = PlayerModel(currentHealth = 20, maximumHealth = 20, attack = (1..6), armor = 5)
+        val monster =
+            MonsterModel(currentHealth = 20, maximumHealth = 20, attack = (1..6), armor = 3)
+        var numberOfHealing = 4 // Количество исцелений героя
 
-        var player = PlayerModel(health = 20, attack = (1..6), armor = 5)
-        var monster = MonsterModel(health = 20, attack = (1..6), armor = 3)
-        var counter = 3 // Количество исцелений героя
-
-        binding.textHealthPlayer.text = player.health.toString()
+        binding.textHealthPlayer.text = player.maximumHealth.toString()
         binding.textAttackPlayer.text =
             player.attack.first.toString() + "-" + player.attack.last.toString()
         binding.textArmorPlayer.text = player.armor.toString()
-        binding.textHealthMonster.text = monster.health.toString()
+        binding.textHealthMonster.text = monster.maximumHealth.toString()
         binding.textAttackMonster.text =
             monster.attack.first.toString() + "-" + monster.attack.last.toString()
         binding.textArmorMonster.text = monster.armor.toString()
-
+        binding.textHeal.text = numberOfHealing.toString()
+        
+        binding.buttonHeal.setOnClickListener { 
+            if (numberOfHealing == 0){
+                toastShowShort("Исцеления закончены")
+            } else if (player.currentHealth == 0){
+                toastShowShort("Вы не можете исцелиться, так как мертвы")
+            }
+            else {
+                ExtendedPlayer().heal(player)
+                numberOfHealing--
+                binding.textHeal.text = numberOfHealing.toString()
+                binding.textHealthPlayer.text = player.currentHealth.toString()
+            }
+        }
 
         binding.buttonHit.setOnClickListener {
-            if (counter > 0) {      //Когда количество исцелений героя становится равно нулю, то игра заканчивается
+
+            /* Пока количество здоровья героя больше 0,
+             * игра продолжается */
+
+            if (player.currentHealth > 0) {
 
                 val playerAttack = player.attack.random()
                 val monsterAttack = monster.attack.random()
 
                 var modifierOfAttackPlayer: Int = playerAttack - monster.armor + 1
-                if (modifierOfAttackPlayer < 1)    //Если модификатор урона будет меньше одного, то мы
-                    modifierOfAttackPlayer =
-                        1     //будем приравнивать его единице, чтобы кубик был брошен минимум 1 раз
-
                 var modifierOfAttackMonster: Int = monsterAttack - player.armor + 1
-                if (modifierOfAttackMonster < 1)   //Если модификатор урона будет меньше одного, то мы
-                    modifierOfAttackMonster =
-                        1    //будем приравнивать его единице, чтобы кубик был брошен минимум 1 раз
 
-                var i = 1
-                var k = 1
+                /* Если модификатор урона будет меньше одного,
+                 * то мы будем приравнивать его единице,
+                 * чтобы кубик был брошен минимум 1 раз */
 
-                // в последующих циклах мы будем проверять успех удара
-                while (i <= modifierOfAttackPlayer) {         // так как количество кубиков совпадает с модификатором атаки,
-                    val dice = (1..6).random()                    // то в этот цикл будет работать, пока не станет равен модификатору
+                if (modifierOfAttackPlayer < 1) modifierOfAttackPlayer = 1
+                if (modifierOfAttackMonster < 1) modifierOfAttackMonster = 1
+
+                var playerDiceCounter = 1
+                var monsterDiceCounter = 1
+
+                /* Кидаем кубик, пока их количество
+                *  не станет равно модификатору атаки*/
+
+                while (playerDiceCounter <= modifierOfAttackPlayer) {
+                    val dice =
+                        (1..6).random()
                     if (dice == 5 || dice == 6) {
                         toastShowShort("Ваш удар успешен, вы наносите урон в виде $playerAttack")
-                        monster.health -= playerAttack
-                        binding.textHealthMonster.text = monster.health.toString()
-                        if (monster.health <= 0) {    // Если монстр умирает, то будет появляться новый, сильнее прежнего
+                        monster.currentHealth -= playerAttack
+                        binding.textHealthMonster.text = monster.currentHealth.toString()
+                        if (monster.currentHealth <= 0) { //
                             toastShowShort("Монстр умер, но он был не один")
-                            monster = monsterModel.copy(
-                                health = monsterModel.health + 2,
-                                attack = monsterModel.attack,
-                                armor = monsterModel.armor
-                            )
+                            monster.maximumHealth += 2
+                            monster.currentHealth = monster.maximumHealth
                             binding.textHealthMonster.text =
-                                monster.health.toString()  // Меняем количество здоровья у монстра
-                            monsterModel.health += 2
+                                monster.currentHealth.toString()
                         }
-                        break           // Здесь, если удар успешен, мы заканчиваем цикл
-                    } else if (k == modifierOfAttackMonster) {
+                        break // Заканчиваем цикл, если удар успешен
+                    } else {
                         toastShowShort("Вы промахнулись")
-                        i++
-                    } else i++
+                        playerDiceCounter++
+                    }
                 }
 
-                while (k <= modifierOfAttackMonster) {
+                while (monsterDiceCounter <= modifierOfAttackMonster) {
                     val dice = (1..6).random()
                     if (dice == 5 || dice == 6) {
                         toastShowLong("Удар монстра успешен, он наносит урон в виде $monsterAttack")
-                        player.health -= monsterAttack
-                        binding.textHealthPlayer.text = player.health.toString()
-                        if (player.health <= 0) {
-                            counter--
-                            when (counter) {
-                                2, 1 -> {
-                                    toastShowLong("Вы умерли, у вас осталось $counter возрождений")
-                                    player = playerModel.copy(
-                                        health = playerModel.health / 2,
-                                        attack = playerModel.attack,
-                                        armor = playerModel.armor
-                                    )
-                                    binding.textHealthPlayer.text = player.health.toString()
-                                }
-                                0 -> {
-                                    binding.textHealthPlayer.text = "0"
-                                    toastShowLong("Ваши жизни закончились, GAME OVER")
-                                    break
-                                }
-                            }
+                        player.currentHealth -= monsterAttack
+                        binding.textHealthPlayer.text = player.currentHealth.toString()
+                        if (player.currentHealth <= 0) {
+                            binding.textHealthPlayer.text = "0"
+                            toastShowLong("Ваши умерли")
                         }
-                        break           // Здесь, если удар успешен, мы заканчиваем цикл
-                    } else if (k == modifierOfAttackMonster) {
+                        break
+                    } else {
                         toastShowLong("Монстр промахнулся")
-                        k++
-                    } else k++
+                        monsterDiceCounter++
+                    }
                 }
-
-            } else toastShowLong("Ваши жизни закончились") // Если количество жизней равно 0, то игра не будет работать
+            } else toastShowLong("Вы мертвы")
         }
         return binding.root
     }

@@ -79,6 +79,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/imageHealingPotion"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/heal"
+        app:layout_constraintEnd_toEndOf="@+id/textAttackPlayer"
+        app:layout_constraintStart_toStartOf="@+id/textAttackPlayer"
+        app:layout_constraintTop_toBottomOf="@+id/textAttackPlayer" />
+
+    <ImageView
         android:id="@+id/imageHealthMonster"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -108,6 +117,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageSwordMonster"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textHealthPlayer"
@@ -144,6 +154,18 @@
         app:layout_constraintEnd_toEndOf="@+id/imageArmorPlayer"
         app:layout_constraintStart_toStartOf="@+id/imageArmorPlayer"
         app:layout_constraintTop_toBottomOf="@+id/imageArmorPlayer" />
+
+    <TextView
+        android:id="@+id/textHeal"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:hint="@string/damage"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageHealingPotion"
+        app:layout_constraintStart_toStartOf="@+id/imageHealingPotion"
+        app:layout_constraintTop_toBottomOf="@+id/imageHealingPotion" />
 
     <TextView
         android:id="@+id/textHealthMonster"
@@ -186,17 +208,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="90dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginBottom="90dp"
         android:backgroundTint="@color/yellow"
         android:fontFamily="@font/roboto_bold"
-        android:paddingVertical="12sp"
+        android:paddingVertical="12dp"
         android:text="@string/Hit"
+        android:textAllCaps="false"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textHeal" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonHeal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="30dp"
+        android:text="@string/heal"
+        android:layout_marginHorizontal="120dp"
+        android:backgroundTint="@color/yellow"
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonHit"
+        app:layout_constraintStart_toStartOf="@+id/buttonHit"
+        app:layout_constraintTop_toBottomOf="@+id/buttonHit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
